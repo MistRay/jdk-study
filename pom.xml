@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.mistray.jdk</groupId>
+  <artifactId>jdk-study</artifactId>
+  <version>1.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>jdk-study</name>
+  <description>jdk源码</description>
+  <modules>
+    <module>jdk1.7</module>
+    <module>jdk1.8</module>
+    <module>jdk1.9</module>
+    <module>demo</module>
+      <module>study</module>
+  </modules>
+
+  <properties>
+
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <!-- 编译插件, 设定JDK版本 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+          <debug>true</debug>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
