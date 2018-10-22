@@ -1,6 +1,6 @@
 # jdk-study
 
- [from jdk-source](https://github.com/MistRay/jdk-source)  
+ [from jdk-source](https://github.com/limm33/jdk-source)  
 
   JDK源码【1.7/1.8/1.9】，方便查看代码；  
   Java官方demo。
