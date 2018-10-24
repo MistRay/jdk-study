@@ -580,6 +580,9 @@ public class HashMap<K,V> extends AbstractMap<K,V>
         if ((tab = table) != null && (n = tab.length) > 0 &&
             (first = tab[(n - 1) & hash]) != null) {
             // 判断桶的第一个位置(链表/红黑树)的key是否为查询的key,就直接返回value
+            // 1.先判断桶的第一个位置的hash与查询key的hash是否相同
+            // 2.再判断桶的第一个位置的key的地址值和查询key是否相同||使用equals进行判断
+            // 3.如果上面条件都符合的情况下,直接返回该桶的第一个元素
             if (first.hash == hash && // always check first node
                 ((k = first.key) == key || (key != null && key.equals(k))))
                 return first;
@@ -589,7 +592,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                 if (first instanceof TreeNode)
                     return ((TreeNode<K,V>)first).getTreeNode(hash, key);
                 do {
-                    // 执行到该位置说明不是树,按链表的方式查询
+                    // 执行到该位置说明不是树,按链表的方式查找
                     if (e.hash == hash &&
                         ((k = e.key) == key || (key != null && key.equals(k))))
                         return e;
