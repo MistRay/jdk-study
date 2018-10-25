@@ -10,7 +10,7 @@
   <modules>
     <module>jdk1.7</module>
     <module>jdk1.8</module>
-    <module>jdk1.9</module>
+<!--    <module>jdk1.9</module>-->
     <module>demo</module>
       <module>study</module>
   </modules>
