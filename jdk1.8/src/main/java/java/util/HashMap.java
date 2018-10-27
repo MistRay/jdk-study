@@ -662,7 +662,7 @@ public class HashMap<K, V> extends AbstractMap<K, V>
             n = (tab = resize()).length;
         // 根据key的hashCode定位到具体的桶,并判断桶是否为空,说明没有桶也就不会产生hash冲突,直接创建一个新桶
         /**
-         * (n - 1) & hash的值永远不会小于(n-1)
+         * (n - 1) & hash的值永远不会大于(n-1)
          * 且n是随tab扩容进行变化的
          * 当桶数组扩容时,会重新计算hash值
          *
