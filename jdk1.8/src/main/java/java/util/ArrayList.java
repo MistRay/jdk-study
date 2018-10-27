@@ -110,6 +110,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * Default initial capacity.
+     * 默认容量
      */
     private static final int DEFAULT_CAPACITY = 10;
 
@@ -130,29 +131,35 @@ public class ArrayList<E> extends AbstractList<E>
      * The capacity of the ArrayList is the length of this array buffer. Any
      * empty ArrayList with elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA
      * will be expanded to DEFAULT_CAPACITY when the first element is added.
+     * 存储ArrayList元素的数组缓冲区,ArrayList的容量是此数组缓冲区的长度
+     *
      */
     transient Object[] elementData; // non-private to simplify nested class access
 
     /**
      * The size of the ArrayList (the number of elements it contains).
-     *
+     * ArrayList的长度大小
      * @serial
      */
     private int size;
 
     /**
      * Constructs an empty list with the specified initial capacity.
+     * 构造指定初始容量的空列表
      *
      * @param  initialCapacity  the initial capacity of the list
      * @throws IllegalArgumentException if the specified initial capacity
      *         is negative
      */
     public ArrayList(int initialCapacity) {
+        // 如果指定初始化容量大于0则创建对应容量的Object数组
         if (initialCapacity > 0) {
             this.elementData = new Object[initialCapacity];
+            // 如果指定初始化容量等于0,则返回一个空的Object数组
         } else if (initialCapacity == 0) {
             this.elementData = EMPTY_ELEMENTDATA;
         } else {
+            // 否则抛出异常,指定初始化容量不合法
             throw new IllegalArgumentException("Illegal Capacity: "+
                                                initialCapacity);
         }
@@ -160,8 +167,10 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * Constructs an empty list with an initial capacity of ten.
+     * 无参构造,创建一个初始容量为10的list
      */
     public ArrayList() {
+        // 返回一个初始化容量为0的Object数组
         this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
 
@@ -221,6 +230,10 @@ public class ArrayList<E> extends AbstractList<E>
 
     private void ensureCapacityInternal(int minCapacity) {
         if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
+            // 比较默认容量和minCapacity(最小容量),返回二者中较大的值
+            // 当未指定初始值的时候,传入的minCapacity = 1 DEFAULT_CAPACITY =10
+            // 取较大的值时,会取到默认容量10,然后回通过ensureExplicitCapacity方法初始化容器
+            // 也就是无参构造的ArrayList创建后,并不会初始化,而会在add第一个元素时初始化
             minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
         }
 
@@ -231,6 +244,7 @@ public class ArrayList<E> extends AbstractList<E>
         modCount++;
 
         // overflow-conscious code
+        // 当最小容量大于容器容量时进行扩容
         if (minCapacity - elementData.length > 0)
             grow(minCapacity);
     }
@@ -450,12 +464,15 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * Appends the specified element to the end of this list.
+     * 将指定的元素,添加到list的末尾
      *
      * @param e element to be appended to this list
      * @return <tt>true</tt> (as specified by {@link Collection#add})
      */
     public boolean add(E e) {
+        // ArrayList长度+1
         ensureCapacityInternal(size + 1);  // Increments modCount!!
+        // 将指定元素赋值到数组对应位置
         elementData[size++] = e;
         return true;
     }
