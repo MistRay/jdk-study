@@ -263,7 +263,8 @@ public class ArrayList<E> extends AbstractList<E>
     /**
      * Increases the capacity to ensure that it can hold at least the
      * number of elements specified by the minimum capacity argument.
-     * 扩容
+     * 扩容方法
+     * 增加容量以确保它至少可以保存最小容量指定数量的元素
      *
      * @param minCapacity the desired minimum capacity
      */
