@@ -116,6 +116,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * Shared empty array instance used for empty instances.
+     * 一个空的object[]
      */
     private static final Object[] EMPTY_ELEMENTDATA = {};
 
@@ -123,6 +124,7 @@ public class ArrayList<E> extends AbstractList<E>
      * Shared empty array instance used for default sized empty instances. We
      * distinguish this from EMPTY_ELEMENTDATA to know how much to inflate when
      * first element is added.
+     * 用于默认大小(10)的空数组,将其与有参构造中的空数组分开,以便在添加第一个元素时知道要扩容多少
      */
     private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
 
@@ -475,7 +477,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @return <tt>true</tt> (as specified by {@link Collection#add})
      */
     public boolean add(E e) {
-        // ArrayList长度+1
+        // 确保数组已使用长度(size)加1后足够存下下一个数据
         ensureCapacityInternal(size + 1);  // Increments modCount!!
         // 将指定元素赋值到数组对应位置
         elementData[size++] = e;
@@ -486,6 +488,7 @@ public class ArrayList<E> extends AbstractList<E>
      * Inserts the specified element at the specified position in this
      * list. Shifts the element currently at that position (if any) and
      * any subsequent elements to the right (adds one to their indices).
+     * 将指定元素插入list的指定位置
      *
      * @param index index at which the specified element is to be inserted
      * @param element element to be inserted
@@ -493,8 +496,9 @@ public class ArrayList<E> extends AbstractList<E>
      */
     public void add(int index, E element) {
         rangeCheckForAdd(index);
-
+        // 确保数组已使用长度(size)加1后足够存下下一个数据
         ensureCapacityInternal(size + 1);  // Increments modCount!!
+        // 确保有足够容量后,使用System.arraycopy将需要插入的位置(index)后面的元素全部后移一位
         System.arraycopy(elementData, index, elementData, index + 1,
                          size - index);
         elementData[index] = element;
@@ -679,6 +683,7 @@ public class ArrayList<E> extends AbstractList<E>
      * A version of rangeCheck used by add and addAll.
      */
     private void rangeCheckForAdd(int index) {
+        // 如果插入索引大于list容量或插入索引小于0,直接抛出异常
         if (index > size || index < 0)
             throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
     }
