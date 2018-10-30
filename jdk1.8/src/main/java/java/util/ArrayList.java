@@ -501,7 +501,9 @@ public class ArrayList<E> extends AbstractList<E>
         // 确保有足够容量后,使用System.arraycopy将需要插入的位置(index)后面的元素全部后移一位
         System.arraycopy(elementData, index, elementData, index + 1,
                          size - index);
+        // 将需要添加的数据放到指定(index)上
         elementData[index] = element;
+        // 最后,将list长度+1
         size++;
     }
 
