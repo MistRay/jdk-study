@@ -67,11 +67,12 @@ package java.util;
  * @author  Neal Gafter
  * @since 1.2
  */
-
+// 继承了AbstractCollection接口,实现了List接口
 public abstract class AbstractList<E> extends AbstractCollection<E> implements List<E> {
     /**
      * Sole constructor.  (For invocation by subclass constructors, typically
      * implicit.)
+     * 唯一构造函数(对于子类构造函数的调用通常是隐式的)
      */
     protected AbstractList() {
     }
@@ -103,6 +104,8 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
      *         list does not permit null elements
      * @throws IllegalArgumentException if some property of this element
      *         prevents it from being added to this list
+     *
+     *         子类继承该类时必须重写该方法,否则抛出异常
      */
     public boolean add(E e) {
         add(size(), e);
@@ -113,6 +116,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
      * {@inheritDoc}
      *
      * @throws IndexOutOfBoundsException {@inheritDoc}
+     * 抽象方法,未实现
      */
     abstract public E get(int index);
 
@@ -121,6 +125,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
      *
      * <p>This implementation always throws an
      * {@code UnsupportedOperationException}.
+     * 此实现始终抛出UnsupportedOperationException异常
      *
      * @throws UnsupportedOperationException {@inheritDoc}
      * @throws ClassCastException            {@inheritDoc}
@@ -137,6 +142,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
      *
      * <p>This implementation always throws an
      * {@code UnsupportedOperationException}.
+     * 此实现始终抛出UnsupportedOperationException异常
      *
      * @throws UnsupportedOperationException {@inheritDoc}
      * @throws ClassCastException            {@inheritDoc}
