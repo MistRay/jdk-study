@@ -974,21 +974,26 @@ public final class String
      * @see  #equalsIgnoreCase(String)
      */
     public boolean equals(Object anObject) {
+        // 如果地址值相同,直接返回true
         if (this == anObject) {
             return true;
         }
+        // 判断对象是否是String类型,如果不是String类型直接返回false
         if (anObject instanceof String) {
             String anotherString = (String)anObject;
             int n = value.length;
+            // 判断一下String的长度,是否相同
             if (n == anotherString.value.length) {
                 char v1[] = value;
                 char v2[] = anotherString.value;
                 int i = 0;
+                // 使用两个char数组的对应位置的元素是否相同
                 while (n-- != 0) {
                     if (v1[i] != v2[i])
                         return false;
                     i++;
                 }
+                // 如果全部相同返回true
                 return true;
             }
         }
