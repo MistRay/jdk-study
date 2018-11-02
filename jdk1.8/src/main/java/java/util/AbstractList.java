@@ -162,6 +162,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
      *
      * @throws UnsupportedOperationException {@inheritDoc}
      * @throws IndexOutOfBoundsException     {@inheritDoc}
+     * 子类继承该类时必须重写该方法,否则抛出异常
      */
     public E remove(int index) {
         throw new UnsupportedOperationException();
@@ -258,6 +259,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
      * @throws NullPointerException          {@inheritDoc}
      * @throws IllegalArgumentException      {@inheritDoc}
      * @throws IndexOutOfBoundsException     {@inheritDoc}
+     * 子类继承该类时必须重写该方法,否则抛出异常
      */
     public boolean addAll(int index, Collection<? extends E> c) {
         rangeCheckForAdd(index);
