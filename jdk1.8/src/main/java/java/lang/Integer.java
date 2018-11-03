@@ -53,18 +53,21 @@ public final class Integer extends Number implements Comparable<Integer> {
     /**
      * A constant holding the minimum value an {@code int} can
      * have, -2<sup>31</sup>.
+     * 整形的最小值
      */
     @Native public static final int   MIN_VALUE = 0x80000000;
 
     /**
      * A constant holding the maximum value an {@code int} can
      * have, 2<sup>31</sup>-1.
+     * 整形的最大值
      */
     @Native public static final int   MAX_VALUE = 0x7fffffff;
 
     /**
      * The {@code Class} instance representing the primitive type
      * {@code int}.
+     * 该包装类对应的基本类型
      *
      * @since   JDK1.1
      */
@@ -128,7 +131,9 @@ public final class Integer extends Number implements Comparable<Integer> {
      * @see     java.lang.Character#MIN_RADIX
      */
     public static String toString(int i, int radix) {
+        // Character中保存着基数的范围,Character.MIN_RADIX = 2,Character.MAX_RADIX=36,在这个范围外的基数是非法的
         if (radix < Character.MIN_RADIX || radix > Character.MAX_RADIX)
+            // 默认基数为10
             radix = 10;
 
         /* Use the faster version */
