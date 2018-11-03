@@ -129,6 +129,8 @@ public final class Integer extends Number implements Comparable<Integer> {
      * @return  a string representation of the argument in the specified radix.
      * @see     java.lang.Character#MAX_RADIX
      * @see     java.lang.Character#MIN_RADIX
+     *
+     * 该方法根据基数radix，将整数i转换为字符串
      */
     public static String toString(int i, int radix) {
         // Character中保存着基数的范围,Character.MIN_RADIX = 2,Character.MAX_RADIX=36,在这个范围外的基数是非法的
@@ -138,27 +140,32 @@ public final class Integer extends Number implements Comparable<Integer> {
 
         /* Use the faster version */
         if (radix == 10) {
+            // 如果基数是10的情况下,直接采用Integer的toString(int i)方法(更快)进行转换
             return toString(i);
         }
-
+        // Java中一个整形为4字节,即32位,当基数为2时,能够转换得到的最大字符串长度为32,还存在负数的情况
+        // 故分配长度为33的的char数组用来临时存储转换得到的字符串
         char buf[] = new char[33];
+        // 判断是否为负数
         boolean negative = (i < 0);
+        // 从末尾开始放转换后的字符,数组从0开始,故从32开始存放
         int charPos = 32;
-
+        // 如果不是负数,转为负数处理
         if (!negative) {
             i = -i;
         }
 
         while (i <= -radix) {
+            // 根据取余得到的值从上述属性中的digits数组中获取字符
             buf[charPos--] = digits[-(i % radix)];
             i = i / radix;
         }
         buf[charPos] = digits[-i];
-
+        // 根据是否为负数加上负号
         if (negative) {
             buf[--charPos] = '-';
         }
-
+        // 获取起始位置和实际字符长度,由字符数组生成字符串
         return new String(buf, charPos, (33 - charPos));
     }
 
