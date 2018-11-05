@@ -1464,14 +1464,15 @@ public final class String
      * <i>i</i>th character of the string, {@code n} is the length of
      * the string, and {@code ^} indicates exponentiation.
      * (The hash value of the empty string is zero.)
-     *
+     *hashCode方法可以保证相同的字符串具有相同的hash值。但是hash值相同并不一定是字符串的value值相同
      * @return  a hash code value for this object.
      */
     public int hashCode() {
+        // hashCode其实就是使用数学公式：s[0]31^(n-1) + s[1]31^(n-2) + ... + s[n-1]
         int h = hash;
         if (h == 0 && value.length > 0) {
             char val[] = value;
-
+            // 现在很多虚拟机里面都有做相关优化，使用31的原因可能是为了更好的分配hash地址，并且31只占用5bits
             for (int i = 0; i < value.length; i++) {
                 h = 31 * h + val[i];
             }
