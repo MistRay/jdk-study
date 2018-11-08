@@ -84,6 +84,7 @@ public final class StringBuilder
     /**
      * Constructs a string builder with no characters in it and an
      * initial capacity of 16 characters.
+     * 构造一个字符串生成器,初始长度为16
      */
     public StringBuilder() {
         super(16);
@@ -92,6 +93,7 @@ public final class StringBuilder
     /**
      * Constructs a string builder with no characters in it and an
      * initial capacity specified by the {@code capacity} argument.
+     *构造一个字符串生成器,初始长度为自定义
      *
      * @param      capacity  the initial capacity.
      * @throws     NegativeArraySizeException  if the {@code capacity}
