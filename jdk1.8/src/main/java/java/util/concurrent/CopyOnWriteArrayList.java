@@ -92,15 +92,20 @@ public class CopyOnWriteArrayList<E>
     implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
     private static final long serialVersionUID = 8673264195747942595L;
 
-    /** The lock protecting all mutators */
+    /** The lock protecting all mutators
+     *  使用ReentrantLock对集合修改操作进行加锁处理
+     */
     final transient ReentrantLock lock = new ReentrantLock();
 
-    /** The array, accessed only via getArray/setArray. */
+    /** The array, accessed only via getArray/setArray.
+     * 该数组只能通过getArray/setArray进行访问
+     */
     private transient volatile Object[] array;
 
     /**
      * Gets the array.  Non-private so as to also be accessible
      * from CopyOnWriteArraySet class.
+     *获取数组,非私有,以便可以从CopyOnWriteArraySet类访问
      */
     final Object[] getArray() {
         return array;
@@ -108,6 +113,7 @@ public class CopyOnWriteArrayList<E>
 
     /**
      * Sets the array.
+     * set一个数组
      */
     final void setArray(Object[] a) {
         array = a;
@@ -381,7 +387,7 @@ public class CopyOnWriteArrayList<E>
     }
 
     // Positional Access Operations
-
+    // 查询时不做加锁处理,由于是volatile修饰的,所以直接可以获取到最新的数据
     @SuppressWarnings("unchecked")
     private E get(Object[] a, int index) {
         return (E) a[index];
@@ -399,27 +405,37 @@ public class CopyOnWriteArrayList<E>
     /**
      * Replaces the element at the specified position in this list with the
      * specified element.
-     *
+     * 用指定的元素替换此列表中指定位置的元素
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     public E set(int index, E element) {
         final ReentrantLock lock = this.lock;
+        // 加锁
         lock.lock();
         try {
+            // 获取容器
             Object[] elements = getArray();
+            // 获取容器中指定位置的元素
             E oldValue = get(elements, index);
-
+            // 判断指定位置的元素和即将添加的元素是否相同
             if (oldValue != element) {
+                // 获取容器长度
                 int len = elements.length;
+                // 将容器的内容复制到新的容器中
                 Object[] newElements = Arrays.copyOf(elements, len);
+                // 将新容器对应的位置的元素替换成对应元素
                 newElements[index] = element;
+                //用新容器替换旧容器
                 setArray(newElements);
             } else {
                 // Not quite a no-op; ensures volatile write semantics
+                // 确保易失性可用语义
                 setArray(elements);
             }
+            // 返回该位置更改前的值
             return oldValue;
         } finally {
+            // 解锁
             lock.unlock();
         }
     }
