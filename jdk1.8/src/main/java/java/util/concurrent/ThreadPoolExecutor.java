@@ -455,12 +455,14 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * also hold mainLock on shutdown and shutdownNow, for the sake of
      * ensuring workers set is stable while separately checking
      * permission to interrupt and actually interrupting.
+     * 串行化了interruptIdleWorkers
      */
     private final ReentrantLock mainLock = new ReentrantLock();
 
     /**
      * Set containing all worker threads in pool. Accessed only when
      * holding mainLock.
+     * 包含线程池中所有工作线程,只在持有锁的情况下才可以访问
      */
     private final HashSet<Worker> workers = new HashSet<Worker>();
 
@@ -472,6 +474,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
     /**
      * Tracks largest attained pool size. Accessed only under
      * mainLock.
+     * 线程池最大大小.
      */
     private int largestPoolSize;
 
@@ -1272,19 +1275,26 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      *
      * @param corePoolSize the number of threads to keep in the pool, even
      *        if they are idle, unless {@code allowCoreThreadTimeOut} is set
+     *   corePoolSize要保留池中的线程数,即使是它们处于空闲状态,除非设置了allowCoreThreadTimeOut
      * @param maximumPoolSize the maximum number of threads to allow in the
      *        pool
+     *   当workQueue满了的情况下该参数才会生效.规定线程池中最多只能有多少个线程在执行
      * @param keepAliveTime when the number of threads is greater than
      *        the core, this is the maximum time that excess idle threads
      *        will wait for new tasks before terminating.
+     *   当前线程数大于核心线程数(corePoolSize)时,如果空闲时间超过keepAliveTime的情况下,便会消亡
      * @param unit the time unit for the {@code keepAliveTime} argument
+     *   生存时间对应的时间单位
      * @param workQueue the queue to use for holding tasks before they are
      *        executed.  This queue will hold only the {@code Runnable}
      *        tasks submitted by the {@code execute} method.
+     *   存放任务的队列
      * @param threadFactory the factory to use when the executor
      *        creates a new thread
+     *   线程池创建新线程所使用的工厂
      * @param handler the handler to use when execution is blocked
      *        because the thread bounds and queue capacities are reached
+     *    当workQueue已经慢了,同时线程数大于maximumPoolSize时,就会执行拒绝策略.
      * @throws IllegalArgumentException if one of the following holds:<br>
      *         {@code corePoolSize < 0}<br>
      *         {@code keepAliveTime < 0}<br>

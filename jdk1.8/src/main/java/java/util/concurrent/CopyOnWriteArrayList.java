@@ -899,6 +899,7 @@ public class CopyOnWriteArrayList<E>
 
     public void forEach(Consumer<? super E> action) {
         if (action == null) throw new NullPointerException();
+        // 会取到共享内存中存储的最新的容器
         Object[] elements = getArray();
         int len = elements.length;
         for (int i = 0; i < len; ++i) {
