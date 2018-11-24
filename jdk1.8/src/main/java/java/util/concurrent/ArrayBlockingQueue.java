@@ -52,6 +52,9 @@ import java.util.Spliterator;
  * element that has been on the queue the shortest time. New elements
  * are inserted at the tail of the queue, and the queue retrieval
  * operations obtain elements at the head of the queue.
+ * 由数组支持的有界的阻塞队列,此队列FIFO(first-in-first-out).
+ * 队列中的头为进入队列中最长时间的元素.队列中尾为进入队列中最短时间的元素.
+ * 新元素插入队列的尾部,队列检索操作获取队列头部元素
  *
  * <p>This is a classic &quot;bounded buffer&quot;, in which a
  * fixed-sized array holds elements inserted by producers and
@@ -59,6 +62,9 @@ import java.util.Spliterator;
  * changed.  Attempts to {@code put} an element into a full queue
  * will result in the operation blocking; attempts to {@code take} an
  * element from an empty queue will similarly block.
+ * 这是一个经典的"有界缓冲区",其中固定大小的数组包含生产者插入的元素
+ * 由消费者提取的元素.创建后,无法更改容量.尝试将元素放入full队列将导致
+ * 操作阻塞,尝试从空队列中取一个元素也会阻塞.
  *
  * <p>This class supports an optional fairness policy for ordering
  * waiting producer and consumer threads.  By default, this ordering
@@ -66,6 +72,9 @@ import java.util.Spliterator;
  * to {@code true} grants threads access in FIFO order. Fairness
  * generally decreases throughput but reduces variability and avoids
  * starvation.
+ * 此类支持可选公平策略,用于排序等待生产者和消费者线程.
+ * 默认情况下,不保证该排序,但是所使用fairness set to true构造队列以FIFO
+ * 顺序授权线程访问权限. 公平性虽然会降低吞吐量,但是会降低可变性并避免饥饿.
  *
  * <p>This class and its iterator implement all of the
  * <em>optional</em> methods of the {@link Collection} and {@link
@@ -90,10 +99,14 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
      */
     private static final long serialVersionUID = -817911632652898426L;
 
-    /** The queued items */
+    /** The queued items
+     *   队列的容器Object[]
+     */
     final Object[] items;
 
-    /** items index for next take, poll, peek or remove */
+    /** items index for next take, poll, peek or remove
+     *
+     */
     int takeIndex;
 
     /** items index for next put, offer, or add */
