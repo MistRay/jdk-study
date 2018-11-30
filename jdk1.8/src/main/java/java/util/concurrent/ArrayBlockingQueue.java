@@ -374,6 +374,10 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
      * Inserts the specified element at the tail of this queue, waiting
      * up to the specified wait time for space to become available if
      * the queue is full.
+     *  在队尾插入一个元素，
+     *  如果队列没满，立即返回true；
+     *  如果队列满了，立即返回false
+     *  注意：该方法通常优于add(),因为add()失败直接抛异常
      *
      * @throws InterruptedException {@inheritDoc}
      * @throws NullPointerException {@inheritDoc}
@@ -383,6 +387,7 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
 
         checkNotNull(e);
         long nanos = unit.toNanos(timeout);
+        // 加锁
         final ReentrantLock lock = this.lock;
         lock.lockInterruptibly();
         try {
@@ -394,6 +399,7 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
             enqueue(e);
             return true;
         } finally {
+            // 解锁
             lock.unlock();
         }
     }
