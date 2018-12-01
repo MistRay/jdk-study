@@ -120,13 +120,19 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
      * found in any textbook.
      */
 
-    /** Main lock guarding all access */
+    /** Main lock guarding all access
+     * 主锁
+     */
     final ReentrantLock lock;
 
-    /** Condition for waiting takes */
+    /** Condition for waiting takes
+     * 等待的条件--等待取
+     */
     private final Condition notEmpty;
 
-    /** Condition for waiting puts */
+    /** Condition for waiting puts
+     * 等待的条件--等待存入
+     */
     private final Condition notFull;
 
     /**
@@ -166,15 +172,19 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
     /**
      * Inserts element at current put position, advances, and signals.
      * Call only when holding lock.
+     * 在当前位置,在信号位置添加元素,仅在持有锁时才会调用
      */
     private void enqueue(E x) {
         // assert lock.getHoldCount() == 1;
         // assert items[putIndex] == null;
         final Object[] items = this.items;
+        // 把当前元素插入到数组中去
         items[putIndex] = x;
+        // 这里可以看出这个数组是一个环形数组
         if (++putIndex == items.length)
             putIndex = 0;
         count++;
+        // 唤醒在notEmpty条件上等待的线程
         notEmpty.signal();
     }
 
@@ -339,9 +349,11 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
+            // 如果队列已经满了,返回false
             if (count == items.length)
                 return false;
             else {
+                // 将元素插入到队列
                 enqueue(e);
                 return true;
             }
@@ -414,10 +426,13 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
         }
     }
 
+    // 一直阻塞
     public E take() throws InterruptedException {
         final ReentrantLock lock = this.lock;
+        // 获得可响应中断锁
         lock.lockInterruptibly();
         try {
+            // 使用while循环来判断队列是否已满,防止假唤醒
             while (count == 0)
                 notEmpty.await();
             return dequeue();
