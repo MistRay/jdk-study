@@ -220,6 +220,7 @@ public interface BlockingQueue<E> extends Queue<E> {
     /**
      * Inserts the specified element into this queue, waiting if necessary
      * for space to become available.
+     * 向队列尾部插入元素,必要时等待或空间可用
      *
      * @param e the element to add
      * @throws InterruptedException if interrupted while waiting
