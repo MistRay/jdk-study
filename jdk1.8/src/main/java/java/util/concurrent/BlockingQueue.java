@@ -181,6 +181,8 @@ public interface BlockingQueue<E> extends Queue<E> {
     /**
      * Inserts the specified element into this queue if it is possible to do
      * so immediately without violating capacity restrictions, returning
+     * 将元素e插入到队列末尾,如果插入成功,则返回true;
+     * 如果插入失败(即队列已满),则会抛出异常
      * {@code true} upon success and throwing an
      * {@code IllegalStateException} if no space is currently available.
      * When using a capacity-restricted queue, it is generally preferable to
@@ -201,6 +203,8 @@ public interface BlockingQueue<E> extends Queue<E> {
     /**
      * Inserts the specified element into this queue if it is possible to do
      * so immediately without violating capacity restrictions, returning
+     * 将原色e插入到队列末尾,如果插入成功,则返回true;
+     * 如果插入失败(即队列已满),则返回false;
      * {@code true} upon success and {@code false} if no space is currently
      * available.  When using a capacity-restricted queue, this method is
      * generally preferable to {@link #add}, which can fail to insert an
@@ -235,6 +239,8 @@ public interface BlockingQueue<E> extends Queue<E> {
     /**
      * Inserts the specified element into this queue, waiting up to the
      * specified wait time if necessary for space to become available.
+     * 向队尾存入元素,如果队列满,则等待一定时间,
+     * 当时间期限到达时,如果还没有插入成功,则返回false,否则返回true
      *
      * @param e the element to add
      * @param timeout how long to wait before giving up, in units of
@@ -256,6 +262,7 @@ public interface BlockingQueue<E> extends Queue<E> {
     /**
      * Retrieves and removes the head of this queue, waiting if necessary
      * until an element becomes available.
+     * 从队首取元素,如果队列为空,则等待
      *
      * @return the head of this queue
      * @throws InterruptedException if interrupted while waiting
@@ -265,6 +272,8 @@ public interface BlockingQueue<E> extends Queue<E> {
     /**
      * Retrieves and removes the head of this queue, waiting up to the
      * specified wait time if necessary for an element to become available.
+     * 从队首取原色,如果队列为空,则等待一段时间,当时间期限到达时,
+     * 如果取不到,则返回null;否则返回取得的元素.
      *
      * @param timeout how long to wait before giving up, in units of
      *        {@code unit}
@@ -297,6 +306,8 @@ public interface BlockingQueue<E> extends Queue<E> {
      * if it is present.  More formally, removes an element {@code e} such
      * that {@code o.equals(e)}, if this queue contains one or more such
      * elements.
+     * 当该元素实例存在则队列中,则从此队列中删除制定元素.
+     * 当队列中含有多个该元素实例时,删除o.equals(e)为true的实例
      * Returns {@code true} if this queue contained the specified element
      * (or equivalently, if this queue changed as a result of the call).
      *
