@@ -84,10 +84,12 @@ public class LinkedList<E>
     extends AbstractSequentialList<E>
     implements List<E>, Deque<E>, Cloneable, java.io.Serializable
 {
+    //集合元素数量
     transient int size = 0;
 
     /**
      * Pointer to first node.
+     * 链表的头节点
      * Invariant: (first == null && last == null) ||
      *            (first.prev == null && first.item != null)
      */
@@ -95,6 +97,7 @@ public class LinkedList<E>
 
     /**
      * Pointer to last node.
+     * 链表的尾节点
      * Invariant: (first == null && last == null) ||
      *            (last.next == null && last.item != null)
      */
@@ -102,6 +105,7 @@ public class LinkedList<E>
 
     /**
      * Constructs an empty list.
+     * 无参构造,什么也不干
      */
     public LinkedList() {
     }
@@ -110,6 +114,7 @@ public class LinkedList<E>
      * Constructs a list containing the elements of the specified
      * collection, in the order they are returned by the collection's
      * iterator.
+     * 调用addAll方法将集合c的元素全部插入到链表中
      *
      * @param  c the collection whose elements are to be placed into this list
      * @throws NullPointerException if the specified collection is null
@@ -967,9 +972,13 @@ public class LinkedList<E>
         }
     }
 
+    // 可以由数据结构看出,这是一个双向链表
     private static class Node<E> {
+        // 元素值
         E item;
+        // 下一个节点
         Node<E> next;
+        // 上一个节点
         Node<E> prev;
 
         Node(Node<E> prev, E element, Node<E> next) {
