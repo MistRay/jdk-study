@@ -126,30 +126,41 @@ public class LinkedList<E>
 
     /**
      * Links e as first element.
+     * 将e作为链表的首节点
      */
     private void linkFirst(E e) {
         final Node<E> f = first;
+        // 创建一个prev为null,next值为f,节点值为e的节点
         final Node<E> newNode = new Node<>(null, e, f);
+        // 将newNode作为首节点
         first = newNode;
+        // 如果newNode后面没有节点就将newNode作为最后一个节点
         if (f == null)
             last = newNode;
+        // 否则就将newNode赋值给f的prev
         else
             f.prev = newNode;
+        // 列表长度+1
         size++;
         modCount++;
     }
 
     /**
      * Links e as last element.
+     * 将e作为链表的尾节点
      */
     void linkLast(E e) {
         final Node<E> l = last;
+        // 创建一个prev值为l,next值为null,节点值为e的节点
         final Node<E> newNode = new Node<>(l, e, null);
         last = newNode;
+        // 如果newNode前面没有节点就将newNode作为第一个节点
         if (l == null)
             first = newNode;
+        // 否则将newNode赋值给l的next
         else
             l.next = newNode;
+        // 列表长度+1
         size++;
         modCount++;
     }
