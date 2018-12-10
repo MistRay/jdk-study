@@ -570,13 +570,15 @@ public class LinkedList<E>
      */
     Node<E> node(int index) {
         // assert isElementIndex(index);
-
+        // 如果索引位置靠链表前半部分,从头开始遍历
         if (index < (size >> 1)) {
             Node<E> x = first;
             for (int i = 0; i < index; i++)
                 x = x.next;
             return x;
-        } else {
+        }
+        // 否则,从尾部开始遍历
+        else {
             Node<E> x = last;
             for (int i = size - 1; i > index; i--)
                 x = x.prev;
