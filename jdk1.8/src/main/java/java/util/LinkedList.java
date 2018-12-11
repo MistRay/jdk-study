@@ -503,9 +503,13 @@ public class LinkedList<E>
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     public E set(int index, E element) {
+        // 检查是否越界
         checkElementIndex(index);
+        // 取出对应的Node
         Node<E> x = node(index);
+        // 保存旧值,返回时使用
         E oldVal = x.item;
+        // 用新值覆盖旧值
         x.item = element;
         return oldVal;
     }
@@ -605,6 +609,7 @@ public class LinkedList<E>
      * More formally, returns the lowest index {@code i} such that
      * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
      * or -1 if there is no such index.
+     * 根据节点对象查询下标
      *
      * @param o element to search for
      * @return the index of the first occurrence of the specified element in
@@ -612,13 +617,16 @@ public class LinkedList<E>
      */
     public int indexOf(Object o) {
         int index = 0;
+        // 如果对象为null
         if (o == null) {
+            // 遍历链表
             for (Node<E> x = first; x != null; x = x.next) {
                 if (x.item == null)
                     return index;
                 index++;
             }
         } else {
+            // 遍历链表
             for (Node<E> x = first; x != null; x = x.next) {
                 if (o.equals(x.item))
                     return index;
