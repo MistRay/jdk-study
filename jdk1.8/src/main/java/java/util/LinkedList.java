@@ -609,8 +609,8 @@ public class LinkedList<E>
      * More formally, returns the lowest index {@code i} such that
      * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
      * or -1 if there is no such index.
-     * 根据节点对象查询下标
-     *
+     * 根据节点对象查询下标--正向遍历链表
+     * 如果查询不到则返回-1
      * @param o element to search for
      * @return the index of the first occurrence of the specified element in
      *         this list, or -1 if this list does not contain the element
@@ -642,20 +642,24 @@ public class LinkedList<E>
      * More formally, returns the highest index {@code i} such that
      * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
      * or -1 if there is no such index.
-     *
+     * 根据节点对象查询下标-反向遍历链表
+     * 如果查询不到则返回-1
      * @param o element to search for
      * @return the index of the last occurrence of the specified element in
      *         this list, or -1 if this list does not contain the element
      */
     public int lastIndexOf(Object o) {
         int index = size;
+        // 如果对象为null
         if (o == null) {
+            // 反向遍历链表
             for (Node<E> x = last; x != null; x = x.prev) {
                 index--;
                 if (x.item == null)
                     return index;
             }
         } else {
+            // 反向遍历链表
             for (Node<E> x = last; x != null; x = x.prev) {
                 index--;
                 if (o.equals(x.item))
