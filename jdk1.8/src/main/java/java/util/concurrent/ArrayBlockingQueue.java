@@ -105,14 +105,18 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
     final Object[] items;
 
     /** items index for next take, poll, peek or remove
-     *
+     *    take,poll,peek or remove 的下一个索引
      */
     int takeIndex;
 
-    /** items index for next put, offer, or add */
+    /** items index for next put, offer, or add
+     * put,offer,or add的下一个索引
+     */
     int putIndex;
 
-    /** Number of elements in the queue */
+    /** Number of elements in the queue
+     * 队列中的元素个数
+     */
     int count;
 
     /*
@@ -146,6 +150,7 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
 
     /**
      * Circularly decrement i.
+     * 当前元素个数-1
      */
     final int dec(int i) {
         return ((i == 0) ? items.length : i) - 1;
@@ -153,6 +158,7 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
 
     /**
      * Returns item at index i.
+     * 返回对应索引上的元素
      */
     @SuppressWarnings("unchecked")
     final E itemAt(int i) {
@@ -172,6 +178,7 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
     /**
      * Inserts element at current put position, advances, and signals.
      * Call only when holding lock.
+     * 元素放入队列
      * 在当前位置,在信号位置添加元素,仅在持有锁时才会调用
      */
     private void enqueue(E x) {
@@ -191,6 +198,7 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
     /**
      * Extracts element at current take position, advances, and signals.
      * Call only when holding lock.
+     * 元素推出队列,仅在持有锁时才会调用
      */
     private E dequeue() {
         // assert lock.getHoldCount() == 1;
@@ -198,12 +206,15 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
         final Object[] items = this.items;
         @SuppressWarnings("unchecked")
         E x = (E) items[takeIndex];
+        // 将推出队列的元素置为null
         items[takeIndex] = null;
         if (++takeIndex == items.length)
             takeIndex = 0;
+        // 当前拥有的元素值-1
         count--;
         if (itrs != null)
             itrs.elementDequeued();
+        // 唤醒在notFull条件上等待的线程
         notFull.signal();
         return x;
     }
