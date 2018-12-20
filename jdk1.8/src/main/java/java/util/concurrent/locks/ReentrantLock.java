@@ -105,13 +105,17 @@ import java.util.Collection;
  */
 public class ReentrantLock implements Lock, java.io.Serializable {
     private static final long serialVersionUID = 7373984872572414699L;
-    /** Synchronizer providing all implementation mechanics */
+    /** Synchronizer providing all implementation mechanics
+     * 同步器提供所有实现机制
+     */
     private final Sync sync;
 
     /**
      * Base of synchronization control for this lock. Subclassed
      * into fair and nonfair versions below. Uses AQS state to
      * represent the number of holds on the lock.
+     * 该锁的同步控制基础.分为公平版本和非公平版本.
+     * 使用AQS状态体现持有锁的数量
      */
     abstract static class Sync extends AbstractQueuedSynchronizer {
         private static final long serialVersionUID = -5179523762034025860L;
@@ -216,11 +220,13 @@ public class ReentrantLock implements Lock, java.io.Serializable {
 
     /**
      * Sync object for fair locks
+     * 公平锁
      */
     static final class FairSync extends Sync {
         private static final long serialVersionUID = -3000897897090466540L;
 
         final void lock() {
+            // 为AQS提供的接口
             acquire(1);
         }
 
@@ -230,8 +236,11 @@ public class ReentrantLock implements Lock, java.io.Serializable {
          */
         protected final boolean tryAcquire(int acquires) {
             final Thread current = Thread.currentThread();
+            //getState()是从ReentrantLock获取的状态,表示锁当前是否被持有,
+            // 为0时表示没有线程持有锁.此时当前线程会去争取锁的持有权
             int c = getState();
             if (c == 0) {
+                // 查看队列中是否有排在当前线程之前的线程,如果有则放弃争抢锁
                 if (!hasQueuedPredecessors() &&
                     compareAndSetState(0, acquires)) {
                     setExclusiveOwnerThread(current);

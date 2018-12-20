@@ -1247,6 +1247,7 @@ public abstract class AbstractQueuedLongSynchronizer
     /**
      * Queries whether any threads have been waiting to acquire longer
      * than the current thread.
+     * 查询是否有任何线程等待获取的时间长于当前线程
      *
      * <p>An invocation of this method is equivalent to (but may be
      * more efficient than):
@@ -1291,6 +1292,10 @@ public abstract class AbstractQueuedLongSynchronizer
         // The correctness of this depends on head being initialized
         // before tail and on head.next being accurate if the current
         // thread is first in queue.
+        /*
+        正确性取决于头部在尾部之前被初始化.如果当前线程在队列中的第一个,那么它是准确的.
+        */
+        // tail记录队列里的尾节点，head就是头结点
         Node t = tail; // Read fields in reverse initialization order
         Node h = head;
         Node s;
