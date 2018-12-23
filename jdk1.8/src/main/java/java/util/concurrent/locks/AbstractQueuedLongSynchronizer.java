@@ -161,15 +161,22 @@ public abstract class AbstractQueuedLongSynchronizer
         /** Marker to indicate a node is waiting in exclusive mode */
         static final Node EXCLUSIVE = null;
 
-        /** waitStatus value to indicate thread has cancelled */
+        /** waitStatus value to indicate thread has cancelled
+         * waitStatus值,表示线程已被取消(超时等待或者被中断)
+         */
         static final int CANCELLED =  1;
-        /** waitStatus value to indicate successor's thread needs unparking */
+        /** waitStatus value to indicate successor's thread needs unparking
+         * waitStatus值,表示后继线程需要被唤醒
+         */
         static final int SIGNAL    = -1;
-        /** waitStatus value to indicate thread is waiting on condition */
+        /** waitStatus value to indicate thread is waiting on condition
+         * waitStatus值,表示节点线程等待在condition上,当被signal后,会从等待队列转移到同步队列中
+         */
         static final int CONDITION = -2;
         /**
          * waitStatus value to indicate the next acquireShared should
          * unconditionally propagate
+         * waitStatus值,表示下一次共享式同步状态会被无条件地传播下去
          */
         static final int PROPAGATE = -3;
 
@@ -219,6 +226,7 @@ public abstract class AbstractQueuedLongSynchronizer
          * head only as a result of successful acquire. A
          * cancelled thread never succeeds in acquiring, and a thread only
          * cancels itself, not any other node.
+         * 当前节点的的前驱节点
          */
         volatile Node prev;
 
@@ -234,12 +242,14 @@ public abstract class AbstractQueuedLongSynchronizer
          * double-check.  The next field of cancelled nodes is set to
          * point to the node itself instead of null, to make life
          * easier for isOnSyncQueue.
+         * 当前节点的后继节点
          */
         volatile Node next;
 
         /**
          * The thread that enqueued this node.  Initialized on
          * construction and nulled out after use.
+         * 与当前节点关联的排队中的线程
          */
         volatile Thread thread;
 
@@ -252,6 +262,11 @@ public abstract class AbstractQueuedLongSynchronizer
          * re-acquire. And because conditions can only be exclusive,
          * we save a field by using special value to indicate shared
          * mode.
+         * 链接到等待中的下一个节点,或者特殊值SHARED.
+         * 因为condition队列只有在保持独占模式时才被访问,
+         * 所以我们只需要一个简单的linked队列来在节点等待condition时保存节点.
+         * 然后将它们转移到队列中以重新获取.并且因为condition只能是
+         * 独占的,所以我们通过使用特殊值来指示共享模式来保存字段
          */
         Node nextWaiter;
 
