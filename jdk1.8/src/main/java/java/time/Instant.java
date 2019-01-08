@@ -209,14 +209,17 @@ public final class Instant
 
     /**
      * Constant for the 1970-01-01T00:00:00Z epoch instant.
+     * 1970-01-01T00：00：00Z时刻的常数
      */
     public static final Instant EPOCH = new Instant(0, 0);
     /**
      * The minimum supported epoch second.
+     * 支持的最小时期秒
      */
     private static final long MIN_SECOND = -31557014167219200L;
     /**
      * The maximum supported epoch second.
+     * 最大支持的纪元秒
      */
     private static final long MAX_SECOND = 31556889864403199L;
     /**
@@ -260,6 +263,7 @@ public final class Instant
     //-----------------------------------------------------------------------
     /**
      * Obtains the current instant from the system clock.
+     * 从系统时钟获取当前瞬间
      * <p>
      * This will query the {@link Clock#systemUTC() system UTC clock} to
      * obtain the current instant.
@@ -275,6 +279,7 @@ public final class Instant
 
     /**
      * Obtains the current instant from the specified clock.
+     * 从指定时钟获取当前时间
      * <p>
      * This will query the specified clock to obtain the current time.
      * <p>
